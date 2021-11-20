@@ -89,4 +89,51 @@ exports.getAvailableDates = async (req, res, next) => {
     } catch (error) {
         return next(error);
     }
+}   
+
+exports.editBooking = async (req, res, next) => {
+    const { findDate } = req.params
+    const { title, date } = req.body;
+    try {
+        let toEdit = {};
+        if(!date) toEdit.title = title;
+        if(!title) toEdit.date = date;
+        if(title && date) toEdit = {title, date};
+        if(!title && !date) return new ExceptionHandler(400, "Please provide title or date");
+
+        await Booking.findOneAndUpdate({
+            date: findDate
+        }, toEdit)
+        .then(data=>{
+            res.json({
+                status: true,
+                data
+            })
+        })
+        .catch(err => {
+            throw err;
+        });
+    } catch (error) {
+        return next(error);
+    }
+}
+
+exports.deleteBooking = async (req, res, next) => {
+    const { date } = req.params;
+    try {
+        await Booking.findOneAndDelete({
+            date
+        })
+        .then(data=>{
+            res.json({
+                status: true,
+                data
+            })
+        })
+        .catch(err => {
+            throw err;
+        });
+    } catch (error) {
+        return next(error);
+    }
 }
