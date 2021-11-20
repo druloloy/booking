@@ -8,10 +8,7 @@ const BookingSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true,
-        unique: [
-            true,
-            'Booking date is already taken'
-        ]
+        unique: true
     },
 },
 {
