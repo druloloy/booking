@@ -1,3 +1,4 @@
+process.env.TZ = 'Asia/Manila';
 require('dotenv').config({path: './secrets/config.env'});
 const express = require('express');
 const cors = require('cors');
