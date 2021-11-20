@@ -39,10 +39,6 @@ exports.createBooking = async (req, res, next) => {
             })
         })
         .catch(err => {
-            res.json({
-                status: false,
-                message: err
-            })
             throw err;
         });
     } catch (error) {
