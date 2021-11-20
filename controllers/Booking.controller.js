@@ -1,22 +1,23 @@
 const Booking = require("../models/Booking.model");
+const ExceptionHandler = require("../utils/ExceptionHandler");
 
-exports.getAllBookings = async (req, res) => {
+exports.getAllBookings = async (req, res, next) => {
   try {
       await Booking.find()
         .then(data=>{
             res.json({
-                status: "success",
+                status: true,
                 data
             })
         })
         .catch(err => {
             res.json({
-                status: "error",
+                status: true,
                 message: err
             })
             throw err;
         });
   } catch (error) {
-      console.log(error);
+      return next(error);
   }
 };

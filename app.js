@@ -12,7 +12,11 @@ app.use(cors());
 // parse application/json
 app.use(express.json());
 
+// limit method requests
+app.use(require('./middlewares/limitRequest'));
 
+
+// add route /booking
 app.use('/booking', require('./routes/Booking.route'));
 
 
@@ -24,6 +28,9 @@ const server = app.listen(PORT, () => {
 });
 // connect to database
 connectToDB();
+
+// error handler middleware
+app.use(require('./middlewares/errorHandler'));
 
 process.on('unhandledRejection', (err) => {
     console.log('UNHANDLED REJECTION! Shutting down...');
