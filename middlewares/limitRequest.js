@@ -1,4 +1,4 @@
-exports.limitRequest = (req, res, next) => {
+module.exports = (req, res, next) => {
     const allowedRequests = [ 'POST', 'GET', 'PUT', 'DELETE' ];
     const { method } = req;
     if (allowedRequests.includes(method)) {
