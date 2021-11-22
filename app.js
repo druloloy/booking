@@ -3,7 +3,7 @@ require('dotenv').config({path: './secrets/config.env'});
 const express = require('express');
 const cors = require('cors');
 const { connectToDB } = require('./secrets/dbConn');
-
+const path = require('path');
 
 const app = express();
 
@@ -21,6 +21,14 @@ app.use(require('./middlewares/limitRequest'));
 app.use('/booking', require('./routes/Booking.route'));
 
 
+// serve the frontend
+// 
+// app.use(express.static(path.join(__dirname,'client')));
+
+// app.get('/*', (req,res)=>{
+//     res.sendFile(path.join(__dirname, 'client','index.html'));
+// })  
+// //
 
 const PORT = process.env.PORT || 5000;
 
