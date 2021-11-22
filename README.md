@@ -1,8 +1,8 @@
 # Booking
 
 **Source Codes**
-**[FrontEnd](https://github.com/druloloy/booking-fe)**
-**[BackEnd](https://github.com/druloloy/booking-be)**
+- **[FrontEnd](https://github.com/druloloy/booking-fe)**
+- **[BackEnd](https://github.com/druloloy/booking-be)**
 
 **Dependencies for back-end**
 - [ExpressJS](https://www.npmjs.com/package/express)
