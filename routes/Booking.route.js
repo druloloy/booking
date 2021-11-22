@@ -3,6 +3,7 @@ const {
     getAllBookings,
     createBooking, 
     getAvailableDates,
+    checkExactDate,
     editBooking,
     deleteBooking
 } = require('../controllers/Booking.controller');
@@ -14,10 +15,14 @@ router.get('/all', getAllBookings);
 router.post('/add', createBooking)
 
 // get all available bookings
-router.get('/available', getAvailableDates);
+router.get('/available/:year/:month', getAvailableDates);
+
+// check if exact date is available
+router.get('/check/:date', checkExactDate);
 
 // edit a booking
 router.put('/edit/:findDate', editBooking);
 
+// delete a booking
 router.delete('/delete/:date', deleteBooking);
 module.exports = router;

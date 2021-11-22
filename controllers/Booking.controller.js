@@ -47,9 +47,8 @@ exports.createBooking = async (req, res, next) => {
 }
 
 exports.getAvailableDates = async (req, res, next) => {
-    const { year, month } = req.body;
-    try {
-
+    const { year, month } = req.params;
+    try {  
         const mgDates = new ManageDates(year, month);
 
         const data = await Booking.find({
@@ -64,14 +63,16 @@ exports.getAvailableDates = async (req, res, next) => {
                 status: true,
                 result: {
                     status: true,
-                    data: []
+                    data: [],
+                    message: "All dates are free."
                 }
             });
             if(date.length === mgDates.endDay()) return res.json({  
                 status: true,
                 result: {
                     status: false,
-                    message: "No available dates"
+                    data: [],
+                    message: `No available dates for ${month} ${year}`
                 }
             });
             const availableDates = mgDates.getAvailableDates(date);
@@ -79,7 +80,8 @@ exports.getAvailableDates = async (req, res, next) => {
                 status: true,
                 result: {
                     status: true,
-                    data: availableDates
+                    data: availableDates,
+                    message: `All available dates for ${month} ${year}.`
                 }
             });
         })
@@ -120,6 +122,7 @@ exports.editBooking = async (req, res, next) => {
 
 exports.deleteBooking = async (req, res, next) => {
     const { date } = req.params;
+
     try {
         await Booking.findOneAndDelete({
             date
@@ -128,6 +131,30 @@ exports.deleteBooking = async (req, res, next) => {
             res.json({
                 status: true,
                 data
+            })
+        })
+        .catch(err => {
+            throw err;
+        });
+    } catch (error) {
+        return next(error);
+    }
+}
+
+exports.checkExactDate = async (req, res, next) => {    
+    const { date } = req.params;
+    try {
+        await Booking.findOne({
+            date
+        })
+        .then(data=>{
+            if(data) return res.json({
+                status: true,
+                data
+            })
+            res.json({
+                status: false,
+                message: "No booking found for this date."
             })
         })
         .catch(err => {
