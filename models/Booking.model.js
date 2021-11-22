@@ -7,11 +7,13 @@ const BookingSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: true,
+        unique: true
     },
 },
 {
-    timestamps: true
+    timestamps: true,
+    collection: 'bookings'
 });
 
 module.exports = mongoose.model('Booking', BookingSchema);
